@@ -1,0 +1,314 @@
+Get the NPM files 
+  - npm install create-react-app [-g]
+
+----------------------------------------------------------------
+
+Creating the react application
+  - create-react-app appName
+Navigate to the directory where you want the react app to made
+
+TIP: if you want the same structure as this react app has add this flag to the end of the command
+
+--script-version 1.1.5
+
+----------------------------------------------------------------
+
+Folder structure
+  - src: Are the folders and files where we write the source code of the project
+  - public: the compressed production code ready for deployment
+
+
+Index.html
+We always have 1 html page, and is the only html which will contain all the markup
+
+If we are making a multi page app, then we make multiple react apps and not multiple html pages
+
+This is because each page in that application will be treated as a mini app within a parent container app
+
+The most important element in that html is the div tag with the id of "root", this is where we mount our react app to
+
+TIP: we can ad meta tags in the head of the HTML (like CSS libraries or meta information) we can do so
+
+----------------------------------------------------------------
+
+Index.js
+This is where all the react source files are imported to, and is where we mount the application to the "#root" div
+
+It uses the react method render(), which takes a react component and an HTML element to mount it to
+
+----------------------------------------------------------------
+
+JSX
+This is reacts JS of HTML
+It looks like normal HTML, but it isn't, because under the hood it is converted to JS methods
+
+In summary, just stick to JSX and don't think much about it, its nice to know it is converted from this
+    <div className="App">
+      <p>
+        My name is Carter
+      </p>
+    </div>
+  
+  React.createElement('div', {className: 'App'}, React.createElement('p', null, 'My name is Carter'););
+
+As JSX is actually javascript, it means that we cannot use JS reserved keywords, like "class", so we have to use className to define a class attribute for a HTML element
+
+TIP: Its best practice to wrap all the JSX code in 1 root element, it makes working with React so much easier
+----------------------------------------------------------------
+
+Components
+React is all about working with modular components that are reusable
+
+Components are basically JS files with several functions that all return JSX code that can then be used by React render() method
+
+Components are our own "custom" element
+
+TIP: In this case we made a new component in a new folder called "Person", it is a convention to name component folders and files with a capital letter.
+
+
+Simplest Form
+Components are literally functions that return JSX code
+
+  Function Based
+so using the ES6 form, we write an arrow function that returns JSX code and then export the function from the file
+
+  const person = (props) => {
+    return (
+      <div>
+        <p>
+          My name is {props.name}, and I am {props.age} years old.
+        </p>
+        <p>{props.children}</p>
+      </div>
+    );
+  };
+
+  export default person;
+
+
+  Class Based
+  import React, {Component} from 'react';
+
+  class Person extends Component {
+    render() {
+      return (
+      <div>
+        <p>
+          My name is {this.props.name}, and I am {this.props.age} years old.
+        </p>
+        <p>{this.props.children}</p>
+      </div>
+    );
+    }
+  }
+
+Importing it all in
+So in App.js we import the default function from Person into the file, we also name default method as "Person" (capital P), all lowercase words are reserved for normal HTML tags, thus we use titleized words to work around that issue
+
+  - import Person from './Person/Person';
+
+And in App we can now use our React Component as if it were any HTML element
+
+  <div className="App">
+    <h1>Hi I'm a React App</h1>
+    <p>This is really working!</p>
+    <Person name="Idris" age="21" />
+    <Person name="Tom" age="23" />
+    <Person name="Harry" age="29">
+      My Hobbies: Racing
+    </Person>
+  </div>
+
+All components take the argument props, which allows us to essentially pass in attributes to our "custom" element
+
+  - <Person name="Idris" age="21" />
+
+Props
+Props are attributes to the custom element that we made
+  - {props.name}
+
+We always have to wrap it round curly braces, like in ES6 template strings
+
+
+All props have access to their children, mainly being the text we put in the tag or other elements within them
+
+  <Person name="Harry" age="29">
+    My Hobbies: Racing
+  </Person>
+
+We access them children property to access the data within the element
+  - {props.children}
+
+TIP: when using class based components, we use this.props to access the props, as props becomes an attribute of the component class
+
+----------------------------------------------------------------
+
+State
+In this version of React, it allows us create dynamic variables that we can then attach as attributes to Components.
+
+In this example we are using the class based way of making a component, because state is a property of Component class in the react library
+
+TIP: in the newer versions of react, we can make webhooks which are like state but we can use them in function based components, which makes it so much easier to work with
+
+We define a variable called "state" (always has to), and its an object, so all of its attributes can be any JS objects as well
+  - state = {};
+
+Here make it so that the persons attribute has an array of objects inside of it
+
+We can then access the persons property, using the 
+  - this.state.persons
+
+We can access persons as you would usually do with an array
+
+  class App extends Component {
+    state = {
+      persons: [
+        { name: 'Idris', age: 21 },
+        { name: 'Aurora', age: 23 },
+        { name: 'Layfon', age: 29 },
+      ],
+    };
+
+    render() {
+      return (
+        <div className="App">
+          <h1>Hi I'm a React App</h1>
+          <p>This is really working!</p>
+          <button>Switch Name</button>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+          />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+          />
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}
+          >
+            My Hobbies: Racing
+          </Person>
+        </div>
+      );
+    }
+  }
+
+How to update State
+We do so using the setState() method found in Component class
+
+  -  switchNameHandler = () => {
+      // console.log('Was clicked');
+      // DON'T DO THIS this.state.persons[2].name = 'Layfon Wolfstien Alsief';
+      this.setState({
+        persons: [
+          { name: 'Idris', age: 21 },
+          { name: 'Aurora', age: 23 },
+          { name: 'Layfon Wolfstien', age: 19 },
+        ],
+      });
+    };
+
+What this method does is only override the property persons, it will not touch any other attributes.
+
+Now whenever the state is changed, React will recognize that, and will update that render on application
+
+----------------------------------------------------------------
+
+React update
+
+react will update the screen in 2 places
+  - 1. State
+  - 2. Props
+
+Here whenever a value changes in any of the 2, react sees this and will update the screen with the new values
+
+----------------------------------------------------------------
+
+Handlers
+Event handlers are written within the class they are executed from, so in App we have a button element
+
+  - <button onClick={this.switchNameHandler}>Switch Name</button>
+
+We add the event listener to the onclick event
+**In JSX its onClick, not onclick**
+
+We write the event function as property
+  - switchNameHandler = () => {
+      console.log('Was clicked');
+    };
+
+And reference it within the button element, using the curly braces
+  - <button onClick={this.switchNameHandler}>Switch Name</button>
+
+----------------------------------------------------------------
+
+React Hooks
+
+This is state but for a functional based components
+
+firstly we import useState, instead of Component
+  - import React, { useState } from 'react';  
+
+We define the state of a functional component, by using the useState method, and passing in the state object
+
+  const [personsState, setPersonsState] = useState({
+    persons: [
+      { name: 'Idris', age: 21 },
+      { name: 'Aurora', age: 23 },
+      { name: 'Layfon', age: 29 },
+    ],
+    otherValue: 'Some other value',
+  });  
+
+This method returns an array with ALWAYS 2 values
+  Value 1. being the state object, original and updated object
+  Value 2. being a method that allows us to update the state, to let React know it has changed so React will auto update the DOM
+
+So we array destructing to extract those 2 values, so that we can use it within the function
+
+So now we can personsState to access the attributes within the state object
+  <Person
+    name={personsState.persons[0].name}
+    age={personsState.persons[0].age}
+  />
+
+We can do an event handler update on the state as well
+
+  const switchNameHandler = () => {
+      // console.log('Was clicked');
+      // DON'T DO THIS this.state.persons[2].name = 'Layfon Wolfstien Alsief';
+      setPersonsState({
+        persons: [
+          { name: 'Idris', age: 21 },
+          { name: 'Aurora', age: 23 },
+          { name: 'Layfon Wolfstien', age: 19 },
+        ],
+      });
+    };
+
+Managing multiple states
+
+TIP: By passing in an object, the previous state does not merge with new one passed to the method!
+
+The way around that is to actually use multiple useStates within the object
+remember that useState returns an array and a method, the method mutates the array that is returned from that useState call
+
+But that method does not affect any other useStates array
+
+So think of it like this, each useState is actually independent from one another, they are like houses in a block, all having different properties to each of them
+
+Where as class state is like a high rise flat, where all floors are made with the same properties, and all changes to the building is reflected to everyone in the high rise flat
+
+
+const [personsState, setPersonsState] = useState({
+    persons: [
+      { name: 'Idris', age: 21 },
+      { name: 'Aurora', age: 23 },
+      { name: 'Layfon', age: 29 },
+    ],
+  });
+
+  const [otherState, setOtherState] = useState({
+    otherState: 'some other state',
+  });
