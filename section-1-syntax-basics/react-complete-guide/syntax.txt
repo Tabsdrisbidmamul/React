@@ -312,3 +312,47 @@ const [personsState, setPersonsState] = useState({
   const [otherState, setOtherState] = useState({
     otherState: 'some other state',
   });
+
+----------------------------------------------------------------
+
+Stateful and Stateless Components
+  - Stateful Components: are components that manage state (a.ka. smart/ container components)
+  - Stateless Components: are components that do not manage states (a.ka. dumb/ presentational components)
+
+TIP: Its best to have lots of stateless components, as they are basically components that take data and output the data to react
+
+TIP: Its best to have little of stateful components, because it makes your app easier to maintain and manage, because you can see where the data flow is, the logic of the app is primarily contained in these stateful components
+
+----------------------------------------------------------------
+
+Method referencing as props
+  We can pass in methods from a containing container, or any component in that matter to other components.
+
+So in this case, we want to pass the reference switchNameHandler in App container to Person component, instead of doing an import and export (in this case it would be very hectic to do), we pass in the method as an attribute to the Person tag
+
+  - <Person
+    name={this.state.persons[2].name}
+    age={this.state.persons[2].age}
+    click={this.switchNameHandler}
+  >
+
+The name of the attribute can be anything, but it has to be the same in all of the attributes and make it meaningful
+
+Then in person, we can have it so that the onClick event listener will call that method when clicked, by accessing the props object and accessing the click attribute
+
+  - <p onClick={props.click}>
+
+TIP: Now we have actually changed the state of App, the method switchNameHandler changes state within the App tag, but we have now done it within Person (a dumb component)
+
+Arguments in a method reference
+
+2 ways, using bind is cleaner and more efficient as react re-renders your components a lot
+
+bind
+Using an old JS trick, we use bind to neatly call the function and return a new function that has the argument passed to it
+
+  - click={this.switchNameHandler.bind(this, 'Ayub')}
+
+Arrow function
+Anonymous function returns the function with argument passed to it
+  - <button onClick={() => this.switchNameHandler('Idris!!!')}>
