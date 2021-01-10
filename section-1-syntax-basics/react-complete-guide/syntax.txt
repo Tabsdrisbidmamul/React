@@ -356,3 +356,6 @@ Using an old JS trick, we use bind to neatly call the function and return a new 
 Arrow function
 Anonymous function returns the function with argument passed to it
   - <button onClick={() => this.switchNameHandler('Idris!!!')}>
+
+----------------------------------------------------------------
+
