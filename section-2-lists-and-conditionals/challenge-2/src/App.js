@@ -1,27 +1,49 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import UserInput from './UserInput/UserInput';
+import ValidationComponent from './ValidationComponent/ValidationComponent';
+import CharComponent from './CharComponent/CharComponent';
 
 class App extends Component {
   state = {
     string: '',
-    length: 0,
   };
 
   changeUserInputLength = (event) => {
     this.setState({
-      length: event.target.value.length,
+      string: event.target.value,
+    });
+  };
+
+  deleteCharHandler = (index) => {
+    const stringCopy = this.state.string.split('');
+    stringCopy.splice(index, 1);
+
+    this.setState({
+      string: stringCopy.join(''),
     });
   };
 
   render() {
+    const charList = this.state.string.split('').map((ch, index) => {
+      return (
+        <CharComponent
+          key={index}
+          char={ch}
+          click={() => this.deleteCharHandler(index)}
+        />
+      );
+    });
+
     return (
       <div className="App">
-        <UserInput
-          changed={this.changeUserInputLength}
+        <input
+          onChange={this.changeUserInputLength}
+          value={this.state.string}
         />
         <p>{this.state.length}</p>
+        <ValidationComponent textLength={this.state.string.length} />
+        {charList}
       </div>
     );
   }
