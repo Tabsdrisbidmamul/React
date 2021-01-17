@@ -1,0 +1,156 @@
+// import React, { useState } from 'react';
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+// const App = (props) => {
+//   const [personsState, setPersonsState] = useState({
+//     persons: [
+//       { name: 'Idris', age: 21 },
+//       { name: 'Aurora', age: 23 },
+//       { name: 'Layfon', age: 29 },
+//     ],
+//   });
+
+//   const [otherState, setOtherState] = useState({
+//     otherState: 'some other state',
+//   });
+
+//   console.log(personsState, otherState);
+
+//   const switchNameHandler = () => {
+//     // console.log('Was clicked');
+//     // DON'T DO THIS this.state.persons[2].name = 'Layfon Wolfstien Alsief';
+//     setPersonsState({
+//       persons: [
+//         { name: 'Idris', age: 21 },
+//         { name: 'Aurora', age: 23 },
+//         { name: 'Layfon Wolfstien', age: 19 },
+//       ],
+//     });
+//   };
+
+//   return (
+//     <div className="App">
+//       <h1>Hi I'm a React App</h1>
+//       <p>This is really working!</p>
+//       <button onClick={switchNameHandler}>Switch Name</button>
+//       <Person
+//         name={personsState.persons[0].name}
+//         age={personsState.persons[0].age}
+//       />
+//       <Person
+//         name={personsState.persons[1].name}
+//         age={personsState.persons[1].age}
+//       />
+//       <Person
+//         name={personsState.persons[2].name}
+//         age={personsState.persons[2].age}
+//       >
+//         My Hobbies: Racing
+//       </Person>
+//     </div>
+//   );
+// };
+
+class App extends Component {
+  state = {
+    persons: [
+      { id: 'asdf1', name: 'Idris', age: 21 },
+      { id: 'gfhf2', name: 'Aurora', age: 23 },
+      { id: 'vnvh5', name: 'Layfon', age: 29 },
+    ],
+    otherValue: 'Some other value',
+    showPersons: false,
+  };
+
+  nameChangeHandler = (event, id) => {
+    // Find the index where the 2 id's match
+    const personIndex = this.state.persons.findIndex((persons) => {
+      return persons.id === id;
+    });
+
+    // make and manipulate copies of the person object and persons array
+    // const person = Object.assign({}, this.state.persons[personIndex])
+    const person = { ...this.state.persons[personIndex] };
+
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+
+    // update the persons array at the person object array position
+    persons[personIndex] = person;
+
+    this.setState({
+      persons,
+    });
+  };
+
+  deletePersonHandler = (personIndex) => {
+    // const persons = this.state.persons.splice();
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({ persons });
+  };
+
+  togglePersonsHandler = () => {
+    const isShow = this.state.showPersons;
+    this.setState({ showPersons: !isShow });
+  };
+
+  render() {
+    let persons = null;
+    const style = {
+      backgroundColor: 'green',
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid #bbb',
+      padding: '0.8rem',
+      cursor: 'pointer',
+    };
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((persons, index) => {
+            return (
+              <Person
+                click={this.deletePersonHandler.bind(this, index)}
+                name={persons.name}
+                age={persons.age}
+                key={persons.id}
+                changed={(event) => this.nameChangeHandler(event, persons.id)}
+              />
+            );
+          })}
+        </div>
+      );
+
+      style.backgroundColor = 'red';
+    }
+
+    const classes = [];
+
+    if (this.state.persons.length <= 2) {
+      classes.push('red'); // classes = ['red']
+    }
+
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); // classes = ['red', 'bold']
+    }
+
+    return (
+      <div className="App">
+        <h1>Hi I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+
+        <button style={style} onClick={this.togglePersonsHandler}>
+          Toggle Persons
+        </button>
+
+        {persons}
+      </div>
+    );
+  }
+}
+
+export default App;
