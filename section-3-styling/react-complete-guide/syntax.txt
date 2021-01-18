@@ -560,3 +560,16 @@ So we create an empty array, and the arrays contents will change depending on co
     }
   
     <p className={classes.join(' ')}>This is really working!</p>
+
+----------------------------------------------------------------
+
+Sass in React
+
+Follow these steps
+  1. npm install node-sass@4.14.1
+    - There is an compatibility error with react-scripts and the latest version of sass (5.0.0)
+  2. Create the sass folder directory and main.scss and import all sass files into main.scss (Naming components the same as we did React - capital letter)
+  3. Import the main.scss into index.js
+    - import './sass/main.scss';
+  
+That's it!

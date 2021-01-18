@@ -1,6 +1,5 @@
 // import React, { useState } from 'react';
 import React, { Component } from 'react';
-import './App.css';
 import Person from './Person/Person';
 
 // const App = (props) => {
@@ -54,15 +53,16 @@ import Person from './Person/Person';
 // };
 
 class App extends Component {
-  state = {
-    persons: [
-      { id: 'asdf1', name: 'Idris', age: 21 },
-      { id: 'gfhf2', name: 'Aurora', age: 23 },
-      { id: 'vnvh5', name: 'Layfon', age: 29 },
-    ],
-    otherValue: 'Some other value',
-    showPersons: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      persons: [
+        { id: 'asdf1', name: 'Idris', age: 21 },
+        { id: 'gfhf2', name: 'Aurora', age: 23 },
+        { id: 'vnvh5', name: 'Layfon', age: 29 },
+      ],
+    };
+  }
 
   nameChangeHandler = (event, id) => {
     // Find the index where the 2 id's match
@@ -99,10 +99,12 @@ class App extends Component {
 
   render() {
     let persons = null;
+
     const style = {
       backgroundColor: 'green',
       color: 'white',
       font: 'inherit',
+      fontSize: '1.8rem',
       border: '1px solid #bbb',
       padding: '0.8rem',
       cursor: 'pointer',
