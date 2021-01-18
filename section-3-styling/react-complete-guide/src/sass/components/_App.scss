@@ -15,3 +15,26 @@ p {
 .bold {
   font-weight: bold;
 }
+
+.btn {
+  background-color: green;
+  color: white;
+  font-family: inherit;
+  font-size: 1.8rem;
+  border: 1px solid #bbb;
+  padding: 0.8rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightgreen;
+    color: black;
+  }
+}
+
+.btn--red {
+  background-color: red;
+
+  &:hover {
+    background-color: salmon;
+  }
+}
