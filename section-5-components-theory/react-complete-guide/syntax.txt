@@ -620,3 +620,22 @@ We first create a new ErrorBoundary component
 
 React will automatically call the error method, when an error happens, thus setting the error flag state to true, and thus we can use it in an if statement to return the custom error page when we want
 
+----------------------------------------------------------------
+
+A New Folder Structure
+
+The way the structure of the project was okay for a small application, but for large ones, we want to re organise to make the code more maintainable and readable.
+
+So want we have done is first create 2 new folders components and container
+  - components will hold all of our customer components that we create,stateless components
+  - container will hold our stateful components, the ones that manage state within the application
+
+How to
+We want to separate as many components as possible, that make sense - so for example the Person component is actually good enough, yeah we could make a separate paragraph or input component - but if we were to use them anywhere else then it makes sense to make it separate.
+
+We want to refactor a list of people into a Person(s) component - note the s at Person, we are making a Persons Component.
+
+By doing it that way, all we have to is pass down the array of person, and the event handlers that change the state as props. This way we have separated state from presentation.
+
+We do the same with the Cockpit, which is the header, paragraph and button.
+

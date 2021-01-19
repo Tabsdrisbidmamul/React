@@ -1,6 +1,7 @@
 // import React, { useState } from 'react';
 import React, { Component } from 'react';
-import Person from './Person/Person';
+import Cockpit from '../components/Cockpit/Cockpit';
+import Persons from '../components/Persons/Persons';
 
 // const App = (props) => {
 //   const [personsState, setPersonsState] = useState({
@@ -104,17 +105,11 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <Person
-                click={this.deletePersonHandler.bind(this, index)}
-                name={person.name}
-                age={person.age}
-                key={person.id}
-                changed={(event) => this.nameChangeHandler(event, person.id)}
-              />
-            );
-          })}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangeHandler}
+          />
         </div>
       );
 
@@ -133,15 +128,11 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Hi I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-
-        <button
-          className={btnClass.join(' ')}
-          onClick={this.togglePersonsHandler}
-        >
-          Toggle Persons
-        </button>
+        <Cockpit
+          classProp={classes}
+          btnClassProp={btnClass}
+          clicked={this.togglePersonsHandler}
+        />
 
         {persons}
       </div>
