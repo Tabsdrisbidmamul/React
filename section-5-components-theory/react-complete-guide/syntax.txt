@@ -639,3 +639,22 @@ By doing it that way, all we have to is pass down the array of person, and the e
 
 We do the same with the Cockpit, which is the header, paragraph and button.
 
+----------------------------------------------------------------
+
+Container and Presentational components
+
+In React 16, we now have available stateful functional components, so the line between class based and functional components were becoming hard to differentiate
+
+So what's the difference
+
+Container components
+We call stateful components (a component that manages state and changes, be it a class or a function). 
+
+These will be the higher order components that will essentially be passing data between presentational Components
+
+Presentational Components
+These are stateless components, the ones that simply render elements to the ui. We pass data to these components via props so far.
+
+They do not manage state, but rather call the methods that were passed to it.
+
+
