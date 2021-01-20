@@ -1,6 +1,8 @@
 import React from 'react';
 
 const cockpit = (props) => {
+  console.log('[Cockpit.js] rendering...');
+
   const classes = [];
   let btnClass = ['btn'];
 
@@ -19,7 +21,9 @@ const cockpit = (props) => {
   return (
     <div>
       <h1>{props.title}</h1>
-      <p className={classes.join(' ')}>This is really working!</p>
+      <p className={classes.join(' ')}>
+        This many people left: {props.persons.length}
+      </p>
 
       <button className={btnClass.join(' ')} onClick={props.clicked}>
         Toggle Persons

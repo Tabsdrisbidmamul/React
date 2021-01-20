@@ -697,7 +697,7 @@ These methods are available in class based components, because you extend Compon
 
 Methods available to overwrite/ write
   - constructor()
-  - getDerivedStateFromProps()
+  - getDerivedStateFromProps(props, state)
   - shouldComponentUpdate()
   - getSnapshotBeforeUpdate()
   - componentDidUpdate()
@@ -705,4 +705,30 @@ Methods available to overwrite/ write
   - componentDidMount()
   - componentWillUnmount()
   - render()
+
+The creation of a class starts with and executes in this order:
+  1. constructor()
+    - This is actually done when we make a class and call super(), we can call super(props) to initialize the props, or we can initialize the state within the constructor
+
+    - NOT TO DO: side-effects; like a HTTP request or a storing something in local storage.
+
+  2. getDerivedStateFromProps(props, state)
+    - This is a static method, so we place the static keyword in front of it when defining it
+    - This is to sync your props to your state, a niche case of a lifecycle hook, but one where if your props have updated, then have the internal state know it and update as well.
+
+    - NOT TO DO: side effects: like a HTTP request, there are other methods to do that in
+  
+  3. render()
+    - This is prepare and structure the JSX code to the DOM, like we have been using so far
+    - Now if this method is rendering child components, so other components, then their lifecycle hooks begin executing and only when their lifecycle is finished is when the parent component (the one that first called render) will resume its lifecycle hook
+
+
+    - NOT TO DO: side effects; again don't do things with HTTP requests, we want to do them in asynchronous methods
+
+  4. componentDidMount()
+    - This lifecycle hook will be used a lot, here we can do side effects: like HTTP requests or anything that is going to take time (do the task asynchronously)
+
+    - NOT TO DO: update the state: if we update the state here then it will trigger re-render of the DOM, which should not be done here, but rather state changing methods we write ourselves 
+
+ The other methods, that were not mentioned in the 4 stages, but in the list of available methods, they exist (most likely will be removed in later versions of React), but there were rarely used as they were the same methods with a different name and 1 or 2 differences here and there. 
 

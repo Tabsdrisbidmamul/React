@@ -54,8 +54,8 @@ import Persons from '../components/Persons/Persons';
 // };
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       persons: [
         { id: 'asdf1', name: 'Idris', age: 21 },
@@ -63,6 +63,12 @@ class App extends Component {
         { id: 'vnvh5', name: 'Layfon', age: 29 },
       ],
     };
+    console.log('[App.js] constructor');
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
   }
 
   nameChangeHandler = (event, id) => {
@@ -99,6 +105,7 @@ class App extends Component {
   };
 
   render() {
+    console.log('[App.js] render');
     let persons = null;
 
     if (this.state.showPersons) {
@@ -123,6 +130,10 @@ class App extends Component {
         {persons}
       </div>
     );
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
   }
 }
 

@@ -1,4 +1,5 @@
 const person = (props) => {
+  console.log('[Person.js] rendering...');
   return (
     <div className="Person">
       <p onClick={props.click}>
