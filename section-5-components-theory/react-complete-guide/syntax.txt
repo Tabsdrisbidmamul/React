@@ -657,4 +657,52 @@ These are stateless components, the ones that simply render elements to the ui. 
 
 They do not manage state, but rather call the methods that were passed to it.
 
+----------------------------------------------------------------
+
+Class vs functional components
+
+Class Components
+Use these components when you want to manage state or access lifecycle hooks and you don't want to use React hooks
+  defined:
+    - class XY extends React.Component {...}
+  Can manage and access state as a property 
+    State is a shared resource pool, meaning there is only 1 state in the class
+    - state = {...}
+    - this.state[.attribute]
+    - this.setState({...})
+  Can access props
+    - constructor(props) { this.props = props }
+    - Or just pass the prop in, React will define it for you
+    - this.props[.attribute]
+  Can access lifecycle hooks
+
+Functional components
+Use these in all other cases
+  defined:
+    - const XY = (props) => {...}
+  Can manage and access state using the useState({}) hook
+    State is non-shared resource pool, meaning the function can have multiple states
+    - const [state, setState] = useState({...})
+    - setState({...})
+    - state[.attribute]
+  Can access props
+    - props[.attribute]
+  Cannot access lifecycle hooks
+  
+----------------------------------------------------------------
+
+Class lifecycle
+
+These methods are available in class based components, because you extend Component, hence we can overwrite these methods
+
+Methods available to overwrite/ write
+  - constructor()
+  - getDerivedStateFromProps()
+  - shouldComponentUpdate()
+  - getSnapshotBeforeUpdate()
+  - componentDidUpdate()
+  - componentDidCatch()
+  - componentDidMount()
+  - componentWillUnmount()
+  - render()
 
