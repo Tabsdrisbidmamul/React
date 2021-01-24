@@ -748,6 +748,7 @@ This lifecycle usually occurs when a prop or state is changed and it follows
     - This method requires that you return a Boolean (be it the Boolean object itself or from a conditional that equates to a Boolean)
       - true: continue with update
       - false: cancel the update
+    - default return is true, if none is provided - makes sense as if it was false, then nothing would be updated
 
     - NOT TO DO: side effects: like HTTP requests
   
