@@ -706,7 +706,7 @@ Methods available to overwrite/ write
   - componentWillUnmount()
   - render()
 
-The creation of a class starts with and executes in this order:
+The creation of a Class Component starts with and executes in this order:
   1. constructor()
     - This is actually done when we make a class and call super(), we can call super(props) to initialize the props, or we can initialize the state within the constructor
 
@@ -730,5 +730,10 @@ The creation of a class starts with and executes in this order:
 
     - NOT TO DO: update the state: if we update the state here then it will trigger re-render of the DOM, which should not be done here, but rather state changing methods we write ourselves 
 
- The other methods, that were not mentioned in the 4 stages, but in the list of available methods, they exist (most likely will be removed in later versions of React), but there were rarely used as they were the same methods with a different name and 1 or 2 differences here and there. 
+ The other methods, that were not mentioned in the 4 stages, but in the list of available methods, they exist (most likely will be removed in later versions of React), but there were rarely used as they were the same methods with a different name and 1 or 2 differences here and there.
+
+ The Class Component update lifecycle goes:
+ Just as we have a lifecycle for when a class component is created, we have a lifecycle for when a component is updated - so be its state or props - React will re-render the UI because of it
+  1. getDerivedStateFromProps(props, state)
+    -  
 
