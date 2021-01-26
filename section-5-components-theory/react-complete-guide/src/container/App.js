@@ -71,6 +71,15 @@ class App extends Component {
     return state;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('[App.js] componentDidUpdate');
+  }
+
   nameChangeHandler = (event, id) => {
     // Find the index where the 2 id's match
     const personIndex = this.state.persons.findIndex((persons) => {

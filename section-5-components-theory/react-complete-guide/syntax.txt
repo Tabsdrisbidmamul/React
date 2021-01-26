@@ -698,9 +698,9 @@ These methods are available in class based components, because you extend Compon
 Methods available to overwrite/ write
   - constructor()
   - getDerivedStateFromProps(props, state)
-  - shouldComponentUpdate()
-  - getSnapshotBeforeUpdate()
-  - componentDidUpdate()
+  - shouldComponentUpdate(nextProps, nextState)
+  - getSnapshotBeforeUpdate(prevProps, prevState)
+  - componentDidUpdate(prevProps, prevState, snapshot)
   - componentDidCatch()
   - componentDidMount()
   - componentWillUnmount()
@@ -736,4 +736,56 @@ The creation of a Class Component starts with and executes in this order:
  Just as we have a lifecycle for when a class component is created, we have a lifecycle for when a component is updated - so be its state or props - React will re-render the UI because of it
   1. getDerivedStateFromProps(props, state)
     -  
+
+The update of a class based component goes like this:
+This lifecycle usually occurs when a prop or state is changed and it follows
+  1. getDerivedStateFromProps(props, state)
+    - This is a static method, so we place the static keyword in front of it when defining it
+    - This is a very niche or rarely used method, but it serves to sync your local state to the props that it may receive (externally usually, like a form)
+
+    - NOT TO DO: side effects: like HTTP requests
+
+  2. shouldComponentUpdate(nextProps, nextState)
+    - This method allows us to cancel the updating process, and allows us to to continue with the re-render or not.
+    - Its main purpose is performance optimization, it allows us to control the I/O in one place
+    - However it can also break a component as well, so use this carefully
+
+    - This method requires that you return a Boolean (be it the Boolean object itself or from a conditional that equates to a Boolean)
+      - true: continue with update
+      - false: cancel the update
+    - default return is true, if none is provided - makes sense as if it was false, then nothing would be updated
+
+    - NOT TO DO: side effects: like HTTP requests
+  
+  3. render()
+    - constructs the virtual DOM and see if there is anything new and if it needs to update the real DOM
+    - Here we prepare the JSX code and React will render that
+    - It also will update the child component props as well, if changed (and they will go through this update lifecycle as well)
+
+    - NOT TO DO: side effects: like HTTP requests
+
+  4. getSnapshotBeforeUpdate(prevProps, prevState)
+    - A niche or rarely used method, but this method takes as arguments the previous state and props, so the current "snapshot" before the user commenced the action they did to start this lifecycle
+    - This is mainly used for last minute DOM operations, that are not involved with updating, but rather retrieving properties from say the Window Object, so the user's scroll position, mouse coordinates etc.
+    - We can then consume it in ComponentDidUpdate, and do something like, auto scroll back to where the user was, after the DOM render is complete
+  
+    - NOT TO DO: side effects: like HTTP requests
+
+  5. componentDidUpdate(prevProps, prevState, snapshot) 
+    - This method is the end of the line, and here it tells React the updating and all the tiny modifications etc are complete
+    - Here we can cause side effects: like HTTP requests
+    
+    - NOT TO DO: update the state (trigger re-render), if we do that, make the HTTP request, then update the state, which re-renders the virtual DOM, its then stuck in an infinite loop
+    - Updating the state should not be done outside of a then() block of a promise or outside the async block
+
+Now imagine it as this, (from the code that we have at the moment), when we type  new name in the text input, its calling the onChange handler in Person.js, which was passed down from Persons.js, which was passed down from App.js in the conditional we wrote when the toggle button is pressed
+  (Method written in App.js)nameChangeHandler()
+  |_(Passed down from App.js into Persons component as prop) props.changed  
+    |_(Passed down from Persons.js to Person component as props) onChange -> prop
+
+From there, we can gather that the event handler is what triggered the state change, thus React locates it, (in Person which is in Persons, which is in App - in the DOM) and makes the lifecycle update happen
+  Lifecycle Update started in App
+  |_(Lifecycle update started in child component) Persons.js
+    |_(Lifecycle update started in child component) Person.js
+  
 
