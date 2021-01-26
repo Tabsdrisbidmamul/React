@@ -732,10 +732,6 @@ The creation of a Class Component starts with and executes in this order:
 
  The other methods, that were not mentioned in the 4 stages, but in the list of available methods, they exist (most likely will be removed in later versions of React), but there were rarely used as they were the same methods with a different name and 1 or 2 differences here and there.
 
- The Class Component update lifecycle goes:
- Just as we have a lifecycle for when a class component is created, we have a lifecycle for when a component is updated - so be its state or props - React will re-render the UI because of it
-  1. getDerivedStateFromProps(props, state)
-    -  
 
 The update of a class based component goes like this:
 This lifecycle usually occurs when a prop or state is changed and it follows
@@ -789,3 +785,28 @@ From there, we can gather that the event handler is what triggered the state cha
     |_(Lifecycle update started in child component) Person.js
   
 
+----------------------------------------------------------------
+
+useEffect
+*TIP: to make this react hook work, the functional component needs to be in uppercase for react to realise this is going to be used in a functional component that you will be saying that will probably doing more than presentation*
+
+Another React hook that is meant to be used in functional components that manage state
+
+arguments: 
+  - is a function that executes every render cycle
+  - is an array of state objects that should constrains the useEffect to only run when the state of that object has changed
+
+like useState, this state can be used multiple times, and should ideally be isolated to one object, so we can useEffect on 1 object and use it again for another object. 
+
+useEffect, is basically all of the class lifecycle hooks put together
+  - we call the function by passing in a Anonymous function
+  - this function will run for every render cycle that happens
+    - when the component is created
+    - when the component is updated
+  - we can do HTTP requests in here as well
+  - we pass in an array with these options
+    - empty array means that the component will run only once as its telling react that this component has no dependencies
+    - an array will a state object, means that the function will run every render cycle only when the state has changed
+    - We can multiple state objects or fields that the useEffect can depend
+
+so it is componentDidMount() and componentDidUpdate() combined together

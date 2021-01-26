@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const cockpit = (props) => {
-  console.log('[Cockpit.js] rendering...');
+const Cockpit = (props) => {
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect');
+  }, [props.persons]);
 
   const classes = [];
   let btnClass = ['btn'];
@@ -32,4 +34,4 @@ const cockpit = (props) => {
   );
 };
 
-export default cockpit;
+export default Cockpit;
