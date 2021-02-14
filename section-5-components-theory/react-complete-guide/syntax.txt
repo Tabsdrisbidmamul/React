@@ -810,3 +810,21 @@ useEffect, is basically all of the class lifecycle hooks put together
     - We can multiple state objects or fields that the useEffect can depend
 
 so it is componentDidMount() and componentDidUpdate() combined together
+
+Cleanup work with useEffect()
+To do cleanup work that is identical to the class based component (componentDidUnmount), within the useEffect anonymous function we simply return a function that will run before every render cycle that happens - depending on the 2nd argument passed
+
+useEffect(() => {
+    console.log('[Cockpit.js] useEffect');
+
+    return () => {
+      console.log('[Cockpit.js] cleanup work useEffect');
+    };
+  }, [props.persons]);
+----------------------------------------------------------------
+
+componentDidUnmount()
+This lifecycle hook in class based components will only run when the component in question has been removed from both the virtual and real DOM. 
+
+This method is very useful when we want to do clean-up work on the component, like removing event listeners
+

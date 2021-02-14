@@ -3,6 +3,10 @@ import React, { useEffect } from 'react';
 const Cockpit = (props) => {
   useEffect(() => {
     console.log('[Cockpit.js] useEffect');
+
+    return () => {
+      console.log('[Cockpit.js] cleanup work useEffect');
+    };
   }, [props.persons]);
 
   const classes = [];
